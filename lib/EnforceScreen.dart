@@ -48,7 +48,6 @@ class _EnforcesScreenState extends State<EnforcesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(SeasonIconHelper.getSeasonImage(widget.spid.id));
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.spid.name),
@@ -58,98 +57,144 @@ class _EnforcesScreenState extends State<EnforcesScreen> {
           children: [
             LayoutBuilder(
               builder: (context, constraints) {
-                double width = constraints.maxWidth;
-                double height = MediaQuery.of(context).size.height;
-                return Stack(
-                  children: [
-                    Container(
-                        child: Image(
-                      image: NetworkImage(
-                          SeasonIconHelper.getSeasonImage(widget.spid.id)),
-                    )),
-                    Positioned.fill(
-                      left: 0,
-                      bottom: 55,
-                      right: 0,
-                      child: Container(
-                        child: Image(
-                          image: NetworkImage(
-                              "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersActionHigh/p${widget.spid.id}.png"),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: height * 0.23,
-                      left: 11,
-                      child: Container(
-                        padding: EdgeInsets.all(5),
-                        width: 50,
-                        height: 50,
-                        child: Image(
-                          image: NetworkImage(
-                            SeasonIconHelper.getSeasonBigImage(widget.spid.id),
+                double maxHeight = constraints.maxHeight == double.infinity
+                    ? MediaQuery.of(context).size.height
+                    : constraints.maxHeight;
+                double maxWidth = constraints.maxWidth == double.infinity
+                    ? MediaQuery.of(context).size.width
+                    : constraints.maxWidth;
+                return Container(
+                  width: maxWidth,
+                  alignment: Alignment.center,
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Container(
+                          width: 200,
+                          child: Image(
+                            fit: BoxFit.contain,
+                            image: NetworkImage(SeasonIconHelper.getSeasonImage(
+                                widget.spid.id)),
                           ),
-                          fit: BoxFit.contain,
                         ),
                       ),
-                    ),
-                    Positioned(
-                      bottom: height * 0.1,
-                      right: width * 0.02,
-                      child: Container(
-                        width: 80,
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: _getDropdownColor(_selectValue),
-                        ),
-                        child: DropdownButton<int>(
-                          isExpanded: true,
-                          value: _selectValue,
-                          // 현재 선택된 값
-                          onChanged: (int? newValue) {
-                            // 값이 변경될 때 호출되는 콜백
-                            setState(() {
-                              _selectValue = newValue!; // 선택된 값 업데이트
-                            });
-                          },
-                          items: <int>[1, 2, 3, 4, 5, 6, 7, 8, 9]
-                              .map<DropdownMenuItem<int>>((int value) {
-                            return DropdownMenuItem<int>(
-                              value: value, // 각 항목의 값
-                              child: Container(
-                                  color: _getDropdownColor(value),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "$value",
-                                    style: TextStyle(color: Colors.white),
-                                  )), // 각 항목에 표시될 텍스트
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      right: 0,
-                      left: 0,
-                      bottom: 10,
-                      child: Row(
+                      Column(
                         children: [
-                          Container(
-                            child: Image(
-                              image: NetworkImage(
-                                  "${SeasonIconHelper.getSeasonSmallImage(widget.spid.id)}"),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  width: 190,
+                                  child: Image(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                        "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersActionHigh/p${widget.spid.id}.png"),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    width: 50,
+                                    height: 30,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: _getDropdownColor(_selectValue),
+                                    ),
+                                    child: DropdownButton<int>(
+                                      isExpanded: true,
+                                      underline: Container(),
+                                      value: _selectValue,
+                                      // 현재 선택된 값
+                                      onChanged: (int? newValue) {
+                                        // 값이 변경될 때 호출되는 콜백
+                                        setState(() {
+                                          _selectValue =
+                                              newValue!; // 선택된 값 업데이트
+                                        });
+                                      },
+                                      items: <int>[
+                                        1,
+                                        2,
+                                        3,
+                                        4,
+                                        5,
+                                        6,
+                                        7,
+                                        8,
+                                        9
+                                      ].map<DropdownMenuItem<int>>((int value) {
+                                        return DropdownMenuItem<int>(
+                                          value: value, // 각 항목의 값
+                                          child: Container(
+                                              color: _getDropdownColor(value),
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "$value",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )), // 각 항목에 표시될 텍스트
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  left: 5,
+                                  child: Container(
+                                    padding: EdgeInsets.all(5),
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                    ),
+                                    child: Image(
+                                      image: NetworkImage(
+                                        SeasonIconHelper.getSeasonBigImage(
+                                            widget.spid.id),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
-                          Text(
-                            "${widget.spid.name}",
-                            style: TextStyle(color: Colors.black, fontSize: 15),
-                          )
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  child: Image(
+                                    image: NetworkImage(
+                                        SeasonIconHelper.getSeasonSmallImage(
+                                            widget.spid.id)),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  widget.spid.name,
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 15),
+                                )
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    )
-                  ],
+                    ],
+                  ),
                 );
               },
             ),
