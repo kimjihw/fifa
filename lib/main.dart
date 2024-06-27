@@ -76,22 +76,29 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             Container(
-              child: Text("강화 시뮬레이터",
+              padding: EdgeInsets.all(20),
+              child: Text("FCOnline \n강화 시뮬레이터",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 30,
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   )),
             ),
             Container(
-              color: Colors.black45,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+              ),
+              height: 80,
+              margin: EdgeInsets.symmetric(horizontal: 10),
               padding: EdgeInsets.all(5),
               child: Row(
                 children: [
                   Expanded(
                     child: Container(
+                      height: 80,
                       padding: EdgeInsets.all(5),
-                      color: Colors.white,
+                      color: Colors.grey[200],
                       child: TextField(
                         controller: _controller,
                         decoration: InputDecoration(
@@ -100,8 +107,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                     ),
-                    flex: 7,
+                    flex: 6,
                   ),
+                  SizedBox(width: 1, child: Container(color: Colors.grey[900],),),
                   Expanded(
                       child: GestureDetector(
                         onTap: () {
