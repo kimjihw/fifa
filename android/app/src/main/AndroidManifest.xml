@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:label="fifa"
+        android:label="강화시뮬레이터"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

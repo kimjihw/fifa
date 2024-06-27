@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Container(
               padding: EdgeInsets.all(20),
-              child: Text("FCOnline \n강화 시뮬레이터",
+              child: Text("FC Online \n강화 시뮬레이터",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
@@ -86,30 +86,26 @@ class _MyHomePageState extends State<MyHomePage> {
                   )),
             ),
             Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
               ),
-              height: 80,
-              margin: EdgeInsets.symmetric(horizontal: 10),
               padding: EdgeInsets.all(5),
+              child: TextField(
+                controller: _controller,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "선수명을 입력해주세요.",
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
               child: Row(
                 children: [
-                  Expanded(
-                    child: Container(
-                      height: 80,
-                      padding: EdgeInsets.all(5),
-                      color: Colors.grey[200],
-                      child: TextField(
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "선수명을 입력해주세요.",
-                        ),
-                      ),
-                    ),
-                    flex: 6,
-                  ),
-                  SizedBox(width: 1, child: Container(color: Colors.grey[900],),),
                   Expanded(
                       child: GestureDetector(
                         onTap: () {
@@ -119,24 +115,29 @@ class _MyHomePageState extends State<MyHomePage> {
                           });
                         },
                         child: Container(
-                          color: Colors.white,
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          color:  const Color(0xff1FF261),
                           child: Text(
                             "검색",
                             textAlign: TextAlign.center,
                           ),
                         ),
                       ),
-                      flex: 1),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Expanded(
                       child: GestureDetector(
                         onTap: () {
                           _controller.clear();
                         },
                         child: Container(
-                            color: Colors.white,
-                            child: Text("초기화", textAlign: TextAlign.center)),
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            color: Colors.grey[500],
+                            child: Text("초기화", textAlign: TextAlign.center, style: TextStyle(color: Colors.black),)),
                       ),
-                      flex: 1),
+                  ),
                 ],
               ),
             ),
@@ -180,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(
               height: 10,
             ),
-            if (viewModel.spidList!.isNotEmpty)
+            if (viewModel.spidList?.isNotEmpty == true)
               Expanded(
                 child: ListView.builder(
                   itemCount: viewModel.searchList != null
@@ -206,6 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             height: 50,
                             decoration: BoxDecoration(
                               image: DecorationImage(
+                                fit: BoxFit.cover,
                                 image: viewModel.searchList != null
                                     ? NetworkImage(
                                         "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p${viewModel.searchList![index].id}.png",)
@@ -223,6 +225,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
               )
+            else
+              Expanded(
+                child: Center(
+                  child: Text("데이터가 없습니다."),
+                ),
+              ),
           ],
         ),
       )),
