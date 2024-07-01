@@ -40,6 +40,8 @@ class MetaDataViewModel extends ChangeNotifier {
       _searchList = _spidList!
           .where((element) => int.parse(element.id.toString().substring(0,3)) == id)
           .toList();
+
+      print(_searchList!.length);
     }
     notifyListeners();
   }

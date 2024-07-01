@@ -137,7 +137,7 @@ class _EnforcesScreenState extends State<EnforcesScreen>
     });
   }
 
-  Future<void>_tryEnforce() async{
+  Future<void> _tryEnforce() async {
     _startAnimation();
     await Future.delayed(Duration(seconds: 3));
     _controller.stop();
@@ -205,6 +205,14 @@ class _EnforcesScreenState extends State<EnforcesScreen>
                                           fit: BoxFit.cover,
                                           image: NetworkImage(
                                               "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersActionHigh/p${widget.spid.id}.png"),
+                                          errorBuilder:
+                                              (context, error, stackTrace) =>
+                                                  Image(
+                                            fit: BoxFit.cover,
+                                            image: NetworkImage(
+                                              "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/players/not_found.png",
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       Positioned(
@@ -218,7 +226,7 @@ class _EnforcesScreenState extends State<EnforcesScreen>
                                                   alignment: Alignment.center,
                                                   padding: EdgeInsets.all(5),
                                                   width: 50,
-                                                  height: 50,
+                                                  height: 30,
                                                   decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -227,9 +235,14 @@ class _EnforcesScreenState extends State<EnforcesScreen>
                                                         _selectValue),
                                                   ),
                                                   child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Text(
                                                         "$_selectValue",
+                                                        textAlign:
+                                                            TextAlign.end,
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontSize: 20),
@@ -335,8 +348,16 @@ class _EnforcesScreenState extends State<EnforcesScreen>
                 ),
               ],
             ),
+            SizedBox(
+              height: 20,
+            ),
             Text(
-                "강화 확률: ${Enforce(_selectValue, _enforcePercent).enforcePercent()}%"),
+              "강화 확률: ${Enforce(_selectValue, _enforcePercent).enforcePercent()}%",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20),
+            ),
             SliderTheme(
               data: SliderTheme.of(context).copyWith(
                 activeTrackColor: Colors.blue,
@@ -378,8 +399,15 @@ class _EnforcesScreenState extends State<EnforcesScreen>
                 ),
                 padding: const EdgeInsets.only(
                     left: 30, right: 30, top: 10, bottom: 10),
-                child: const Text("강화 시도", style: TextStyle(fontSize: 20)),
+                child: const Text("강화 시도",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold)),
               ),
+            ),
+            const SizedBox(
+              height: 20,
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
